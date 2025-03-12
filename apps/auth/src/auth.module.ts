@@ -6,6 +6,8 @@ import { LoggerModule } from '@app/common';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi';
+import { LocalStrategy } from './strategies/local.strategy';
+import { JwtStrategy } from './strategies/jwt.strategy';
 
 @Module({
   imports: [
@@ -24,13 +26,14 @@ import * as Joi from 'joi';
       useFactory: (configService: ConfigService) => ({
         secret: configService.get<string>('JWT_SECRET'),
         signOptions: {
-          expiresIn: `${configService.get('JWT_EXPIRATION')}`,
+          expiresIn: configService.get('JWT_EXPIRATION'),
         },
       }),
       inject: [ConfigService],
     }),
   ],
+  providers: [AuthService, LocalStrategy, JwtStrategy],
   controllers: [AuthController],
-  providers: [AuthService],
+  exports: [AuthService],
 })
 export class AuthModule {}
