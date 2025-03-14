@@ -9,8 +9,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ReservationService } from './reservation.service';
-import { CreateReservationDto } from './dto/create-reservation.dto';
-import { UpdateReservationDto } from './dto/update-reservation.dto';
+import { CreateReservationDto, UpdateReservationDto } from './dto';
 import { CurrentUser, IUserDto, JwtAuthGuard } from '@app/common';
 
 @Controller('reservation')
